@@ -4,27 +4,33 @@ import './index.css';
 
 //child component
 class Square extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: null,
-    };
-  }
   render() {
     return (
       <button 
       className="square" 
-      onClick={() => this.setState({value: 'X'})}
-      >
-        {this.state.value}
+      onClick={() => this.props.onClick()}>
+        {this.props.value}
       </button>
     );
   }
 }
-//parent component
+
+// parent component
+
 class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+    };
+  }
   renderSquare(i) {
-    return <Square value={i}/>;
+    return (
+    //now we are passing two values from Board to square
+    <Square value={this.state.squares[i]}
+    onClick={() => this.handleClick(i)}
+    />
+    );
   }
 
   render() {
