@@ -1,19 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.css'
 
-//child component
-class Square extends React.Component {
-  render() {
-    return (
-      <button 
-      className="square" 
-      onClick={() => this.props.onClick()}>
-        {this.props.value}
-      </button>
-    );
-  }
+
+
+//child component which is a controlled component because the Board controls its values
+function Square(props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  );
 }
+
+
+
 
 // parent component
 
@@ -24,9 +25,17 @@ class Board extends React.Component {
       squares: Array(9).fill(null),
     };
   }
+
+  handleClick(i) {
+    const squares = this.state.squares.slice();
+    squares[i] = 'X';
+    this.setState({squares: squares});
+  }
+
   renderSquare(i) {
     return (
     //now we are passing two values from Board to square
+
     <Square value={this.state.squares[i]}
     onClick={() => this.handleClick(i)}
     />
@@ -54,7 +63,8 @@ class Board extends React.Component {
           {this.renderSquare(7)}
           {this.renderSquare(8)}
         </div>
-      </div>
+        </div>
+
     );
   }
 }
@@ -70,7 +80,7 @@ class Game extends React.Component {
           <div>{/* status */}</div>
           <ol>{/* TODO */}</ol>
         </div>
-      </div>
+        </div>
     );
   }
 }
